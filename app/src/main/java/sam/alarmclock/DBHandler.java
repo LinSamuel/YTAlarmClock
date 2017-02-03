@@ -28,8 +28,26 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL(query);
     }
 
+    //Drop current table if version is upgraded
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIDEOOPTIONS);
+        onCreate(db);
     }
+
+    //Add a videoOption to database
+    public void addVideoOption(VideoOption videoOption){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_VIDEOURL, videoOption.getVideoURL());
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_VIDEOOPTIONS, null, values);
+        db.close();
+    }
+
+    //Delete a videoOption from database
+    public void deleteVideoOption(String url){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM( " + TABLE_VIDEOOPTIONS + " WHERE " + COLUMN_VIDEOURL + "=\"" + url + "\";");
+    }
+
 }
