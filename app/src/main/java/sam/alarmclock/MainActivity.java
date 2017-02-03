@@ -125,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     public void onButtonClicked(View v){
         if (v.getId() == R.id.theYoutubeButton){
             Intent intent = new Intent(this,VideoListActivity.class);
+            intent.putExtra("MESSAGE", "starting youtube list");
+            startActivity(intent);
         }
     }
 
