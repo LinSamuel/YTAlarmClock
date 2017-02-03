@@ -9,6 +9,10 @@ public class VideoOption {
     private String videoURL;
     private String videoName;
 
+    public VideoOption(){
+
+    }
+
     public VideoOption(String videoURL) {
         this.videoURL = videoURL;
     }
