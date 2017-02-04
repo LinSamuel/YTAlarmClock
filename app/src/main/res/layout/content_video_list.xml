@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,10 +8,28 @@
     tools:context="sam.alarmclock.VideoListActivity"
     tools:showIn="@layout/activity_video_list">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Button"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:id="@+id/button"
+        android:onClick="testButtonClicked"
+        android:layout_width="wrap_content"
+        android:layout_alignParentStart="true" />
 
-</android.support.v4.widget.NestedScrollView>
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTest"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/button"
+        android:layout_marginStart="105dp"
+        android:layout_marginBottom="202dp" />
+
+    <!--<ListView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/VideoListView"></ListView>-->
+
+</RelativeLayout>

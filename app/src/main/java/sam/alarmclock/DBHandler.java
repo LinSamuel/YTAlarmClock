@@ -50,4 +50,27 @@ public class DBHandler extends SQLiteOpenHelper{
         db.execSQL("DELETE FROM( " + TABLE_VIDEOOPTIONS + " WHERE " + COLUMN_VIDEOURL + "=\"" + url + "\";");
     }
 
+    public String databaseToString() {
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_VIDEOOPTIONS + " WHERE 1";
+
+        //Cursor points to a location in your results
+        Cursor recordSet = db.rawQuery(query, null);
+        //Move to the first row in your results
+        recordSet.moveToFirst();
+
+        //Position after the last row means the end of the results
+        while (!recordSet.isAfterLast()) {
+            // null could happen if we used our empty constructor
+            if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null) {
+                dbString += recordSet.getString(recordSet.getColumnIndex("videourl"));
+                dbString += "\n";
+            }
+            recordSet.moveToNext();
+        }
+        db.close();
+        return dbString;
+    }
+
 }
