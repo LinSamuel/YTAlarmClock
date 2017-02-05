@@ -1,5 +1,6 @@
 package sam.alarmclock;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,9 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+
 public class VideoListActivity extends AppCompatActivity {
 
     TextView testTextView;
+    TextView textViewIntent;
     DBHandler dbHandler;
 
     @Override
@@ -21,8 +24,22 @@ public class VideoListActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 
         testTextView = (TextView) findViewById(R.id.textViewTest);
+        textViewIntent = (TextView) findViewById(R.id.textViewIntent);
         dbHandler = new DBHandler(this, null, null, 1);
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if(Intent.ACTION_SEND.equals(action) && type != null){
+            if ("text/plain".equals(type)){
+                handleYoutubeURL(intent);
+            }
+        }
+
         printDatabase();
+
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +49,13 @@ public class VideoListActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+
+    public void handleYoutubeURL(Intent intent){
+        String url = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (url != null){
+            textViewIntent.setText(url);
+        }
     }
 
     //Print the database
