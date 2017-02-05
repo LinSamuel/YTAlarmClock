@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     AlarmManager theAlarmManager;
     TimePicker theTimePicker;
     TextView update_text;
+    TextView video_text;
     Context context;
     PendingIntent pendingIntent;
 
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         theAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         update_text = (TextView) findViewById(R.id.update_text);
+
+        video_text = (TextView) findViewById(R.id.video_text);
 
         final Calendar calendar = Calendar.getInstance();
 
@@ -108,12 +111,20 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        set_alarm_text(getIntent().getStringExtra("title") + " is the currently selected video");
+        if (getIntent() != null){
+            System.out.println("in here!");
+            set_video_text(getIntent().getStringExtra("title") + " is the currently selected video");
+        }
+
+
 
     }
 
-    private void set_alarm_text(String s) {
+    private void set_video_text(String s){
+        video_text.setText(s);
+    }
 
+    private void set_alarm_text(String s) {
         update_text.setText(s);
     }
 
