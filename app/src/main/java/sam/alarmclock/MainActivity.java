@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        set_alarm_text(getIntent().getStringExtra("title") + " is the currently selected video");
+
     }
 
     private void set_alarm_text(String s) {

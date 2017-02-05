@@ -1,10 +1,14 @@
 package sam.alarmclock;
 
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +19,7 @@ public class VideoListActivity extends AppCompatActivity {
     TextView testTextView;
     TextView textViewIntent;
     DBHandler dbHandler;
+    String selectedURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,22 @@ public class VideoListActivity extends AppCompatActivity {
             }
         }
 
+        Intent currentIntent = NavUtils.getParentActivityIntent(this);
+
+        PendingIntent pendingIntent =
+                TaskStackBuilder.create(this)
+                        // add all of DetailsActivity's parents to the stack,
+                        // followed by DetailsActivity itself
+                        .addNextIntentWithParentStack(currentIntent)
+                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentIntent(pendingIntent);
+
+        System.out.println("here");
+
+
+
         printDatabase();
 
 
@@ -51,9 +72,18 @@ public class VideoListActivity extends AppCompatActivity {
 //        });
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent vidIntent = new Intent(VideoListActivity.this,MainActivity.class);
+        vidIntent.putExtra("title", selectedURL);
+        startActivity(vidIntent);
+
+    }
+
     public void handleYoutubeURL(Intent intent){
         String url = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (url != null){
+            selectedURL = url;
             textViewIntent.setText(url);
         }
     }
