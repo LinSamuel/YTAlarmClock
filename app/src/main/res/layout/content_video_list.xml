@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,10 +8,72 @@
     tools:context="sam.alarmclock.VideoListActivity"
     tools:showIn="@layout/activity_video_list">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:stretchColumns="1"
+        android:id="@+id/theTable">
+    <View
+        android:layout_height="6dip"
+        android:background="#FF4D4D" />
 
-</android.support.v4.widget.NestedScrollView>
+    <TableRow>
+        <TextView
+            android:text="YoutubeURL"
+            android:padding="7dip" />
+        <TextView
+            android:id="@+id/textViewIntent"
+            android:layout_width="match_parent"
+            android:text="[URL HERE]"
+            android:padding="7dip"
+            android:paddingRight="20dp"
+            android:layout_height="wrap_content"
+            android:gravity="left" />
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="Title"
+                android:padding="7dip" />
+            <EditText
+                android:id="@+id/userInput"
+                android:layout_width="wrap_content"
+                android:text="Type Title Here"
+                android:padding="7dip"
+                android:paddingRight="20dp"
+                android:layout_height="wrap_content"
+                android:gravity="left" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:text="Button"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:onClick="testButtonClicked"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/theTable"
+         />
+
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTest"
+        android:layout_marginTop="120dp"
+        android:layout_below="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp" />
+
+    <!--<ListView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/VideoListView"></ListView>-->
+
+</RelativeLayout>
