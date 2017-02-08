@@ -99,9 +99,12 @@ public class VideoListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+
+        //Send extra strings representing the selected name and url to main activity
         Intent vidIntent = new Intent(VideoListActivity.this,MainActivity.class);
         vidIntent.putExtra("name", selectedName);
         vidIntent.putExtra("url", selectedURL);
+        System.out.println("sending URL from vlistactivity: "+ selectedURL);
         startActivity(vidIntent);
 
     }
@@ -153,6 +156,7 @@ public class VideoListActivity extends AppCompatActivity {
                         Toast.makeText(VideoListActivity.this, choice, Toast.LENGTH_SHORT).show();
 
                         //Workaround to extract the title and URL, split by colons and extract the first and third indeces to get the title and URL
+                        // the video links are expected to be in the form of:"https://youtu.be/Z-tTmSY4m4M"
                         String[] splittedChoice = choice.split(":");
                         selectedName = splittedChoice[1].split("\n")[0];
                         selectedURL = splittedChoice[3];

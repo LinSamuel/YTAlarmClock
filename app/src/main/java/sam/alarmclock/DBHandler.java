@@ -99,7 +99,6 @@ public class DBHandler extends SQLiteOpenHelper{
             if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null && recordSet.getString(recordSet.getColumnIndex("videoname")) != null) {
                 urlList.add("Title: " + recordSet.getString(recordSet.getColumnIndex("videoname")) + "\n"
                         + "URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
-                urlList.add("URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
             }
             recordSet.moveToNext();
         }

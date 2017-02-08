@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView video_text;
     Context context;
     PendingIntent pendingIntent;
+    String selectedURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         //Create intent for alarm receiver
         final Intent alarmIntent = new Intent(this.context, AlarmReceiver.class);
 
+        if (getIntent() != null){
+            set_video_text(getIntent().getStringExtra("name") + " is the currently selected video");
+            selectedURL = getIntent().getStringExtra("url");
+        }
+
         if (start_alarm != null) {
             start_alarm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //put extra string in intent, tells clock that you pressed alarm on button
                     alarmIntent.putExtra("extra", "on");
+                    alarmIntent.putExtra("id", extractVideoID(selectedURL));
 
 
                     //Create pending intent for specified calendar time
@@ -111,9 +118,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        if (getIntent() != null){
-            set_video_text(getIntent().getStringExtra("name") + " is the currently selected video");
-        }
+
 
 
 
@@ -156,4 +161,17 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // Function that extracts the video ID from a youtube link in the form like "https://youtu.be/Z-tTmSY4m4M"
+    // This format is the current format of the shared links from the actual YouTube mobile application
+    // id will have the form like: //youtu.be/Z-tTmSY4m4M
+
+    // TODO later, make this more robust, allow it to check for and accordingly for other link formats.
+    public String extractVideoID(String id){
+        System.out.println("the id: " + id);
+        System.out.println("gonna shorten: " + id.substring(11));
+        return id.substring(11);
+    }
+
+
 }

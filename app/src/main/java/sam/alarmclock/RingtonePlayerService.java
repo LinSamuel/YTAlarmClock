@@ -86,6 +86,7 @@ public class RingtonePlayerService extends Service{
 
         //get the extra string values
         String state = intent.getExtras().getString("extra");
+        String videoID = intent.getExtras().getString("id");
 
         assert state != null;
         if (state.equals("on")){
@@ -106,7 +107,7 @@ public class RingtonePlayerService extends Service{
             this.isRunning = true;
             this.startId = 0;*/
 
-            watchYoutubeVideo("zdEhHLjtxDA");
+            watchYoutubeVideo(videoID);
 
             //set up notification manager
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
