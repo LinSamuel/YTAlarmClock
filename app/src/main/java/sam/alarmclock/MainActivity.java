@@ -112,8 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (getIntent() != null){
-            System.out.println("in here!");
-            set_video_text(getIntent().getStringExtra("title") + " is the currently selected video");
+            set_video_text(getIntent().getStringExtra("name") + " is the currently selected video");
         }
 
 

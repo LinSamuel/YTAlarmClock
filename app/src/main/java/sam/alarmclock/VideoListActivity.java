@@ -28,8 +28,13 @@ public class VideoListActivity extends AppCompatActivity {
     TextView textViewIntent;
     EditText userInput;
     DBHandler dbHandler;
+    //Boolean flag used to check if a YoutubeURL has been shared, or else don't add to database
     Boolean urlPlaceHolder = false;
+
+    // url and name of the current picked option on listview
     String selectedURL;
+    String selectedName;
+
     String currentURL;
     ArrayList<String> urlList;
 
@@ -95,7 +100,8 @@ public class VideoListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent vidIntent = new Intent(VideoListActivity.this,MainActivity.class);
-        vidIntent.putExtra("title", selectedURL);
+        vidIntent.putExtra("name", selectedName);
+        vidIntent.putExtra("url", selectedURL);
         startActivity(vidIntent);
 
     }
@@ -145,6 +151,11 @@ public class VideoListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String choice = String.valueOf(parent.getItemAtPosition(position));
                         Toast.makeText(VideoListActivity.this, choice, Toast.LENGTH_SHORT).show();
+
+                        //Workaround to extract the title and URL, split by colons and extract the first and third indeces to get the title and URL
+                        String[] splittedChoice = choice.split(":");
+                        selectedName = splittedChoice[1].split("\n")[0];
+                        selectedURL = splittedChoice[3];
                     }
                 }
         );

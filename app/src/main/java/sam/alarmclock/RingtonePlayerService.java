@@ -96,12 +96,6 @@ public class RingtonePlayerService extends Service{
         } else {
             startId = 0;
         }
-
-
-
-
-
-
         // if no music and user presses alarm on, music should start
         if (!this.isRunning && startId == 1 ) {
             Log.e("No music,",  "lets turn it on");
