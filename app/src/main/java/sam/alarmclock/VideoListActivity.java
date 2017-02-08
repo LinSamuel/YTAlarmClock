@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -11,7 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class VideoListActivity extends AppCompatActivity {
@@ -20,6 +27,8 @@ public class VideoListActivity extends AppCompatActivity {
     TextView textViewIntent;
     DBHandler dbHandler;
     String selectedURL;
+    String currentURL;
+    ArrayList<String> urlList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +51,25 @@ public class VideoListActivity extends AppCompatActivity {
             }
         }
 
-        Intent currentIntent = NavUtils.getParentActivityIntent(this);
+//        Intent currentIntent = NavUtils.getParentActivityIntent(this);
+//
+//        PendingIntent pendingIntent =
+//                TaskStackBuilder.create(this)
+//                        // add all of DetailsActivity's parents to the stack,
+//                        // followed by DetailsActivity itself
+//                        .addNextIntentWithParentStack(currentIntent)
+//                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+//        builder.setContentIntent(pendingIntent);
+//
+//        System.out.println("here");
 
-        PendingIntent pendingIntent =
-                TaskStackBuilder.create(this)
-                        // add all of DetailsActivity's parents to the stack,
-                        // followed by DetailsActivity itself
-                        .addNextIntentWithParentStack(currentIntent)
-                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        //urlList = new ArrayList<String>();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentIntent(pendingIntent);
+//        urlList = dbHandler.databaseToStringList();
 
-        System.out.println("here");
-
+        setUpListView();
 
 
         printDatabase();
@@ -84,6 +98,7 @@ public class VideoListActivity extends AppCompatActivity {
         String url = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (url != null){
             selectedURL = url;
+            currentURL = url;
             textViewIntent.setText(url);
         }
     }
@@ -94,9 +109,34 @@ public class VideoListActivity extends AppCompatActivity {
         testTextView.setText(dbString);
     }
     public void testButtonClicked(View view){
-        System.out.println("hi0");
-        VideoOption videoOption = new VideoOption("zdEhHLjtxDA");
+        //VideoOption videoOption = new VideoOption("zdEhHLjtxDA");
+        VideoOption videoOption = new VideoOption(currentURL);
         dbHandler.addVideoOption(videoOption);
         printDatabase();
+        setUpListView();
+    }
+    public void clearTable(View view){
+        dbHandler.clearTable();
+        printDatabase();
+    }
+
+    public void setUpListView(){
+        urlList = dbHandler.databaseToStringList();
+
+        ListAdapter customListAdapter = new OptionAdapter(this,urlList);//
+        ListView customListView = (ListView) findViewById(R.id.VideoListView);
+        customListView.setAdapter(customListAdapter);
+
+        customListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String food = String.valueOf(parent.getItemAtPosition(position));
+                        Toast.makeText(VideoListActivity.this, food, Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+
     }
 }

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
 
+import java.util.ArrayList;
+
 public class DBHandler extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
@@ -47,7 +49,12 @@ public class DBHandler extends SQLiteOpenHelper{
     //Delete a videoOption from database
     public void deleteVideoOption(String url){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM( " + TABLE_VIDEOOPTIONS + " WHERE " + COLUMN_VIDEOURL + "=\"" + url + "\";");
+        db.execSQL("DELETE * FROM " + TABLE_VIDEOOPTIONS + " WHERE " + COLUMN_VIDEOURL + "=\"" + url + "\";");
+    }
+
+    public void clearTable(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_VIDEOOPTIONS + ";");
     }
 
     public String databaseToString() {
@@ -71,6 +78,33 @@ public class DBHandler extends SQLiteOpenHelper{
         }
         db.close();
         return dbString;
+    }
+
+    public ArrayList<String> databaseToStringList(){
+        ArrayList<String> urlList = new ArrayList<String>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_VIDEOOPTIONS + " WHERE 1";
+
+        //Cursor points to a location in your results
+        Cursor recordSet = db.rawQuery(query, null);
+        //Move to the first row in your results
+        recordSet.moveToFirst();
+
+        //Position after the last row means the end of the results
+        while (!recordSet.isAfterLast()) {
+            // null could happen if we used our empty constructor
+//            if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null && recordSet.getString(recordSet.getColumnIndex("videoname")) != null) {
+////                urlList.add("Title: " + recordSet.getString(recordSet.getColumnIndex("videoname")) + "\n"
+////                        + "URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
+//                urlList.add("URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
+//            } else
+            if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null) {
+                urlList.add("URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
+            }
+            recordSet.moveToNext();
+        }
+        db.close();
+        return urlList;
     }
 
 }

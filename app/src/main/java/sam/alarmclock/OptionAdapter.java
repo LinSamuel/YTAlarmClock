@@ -8,10 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class OptionAdapter extends ArrayAdapter<String>{
-    public OptionAdapter(Context context, String[] foods) {
-        super(context, R.layout.option_row ,foods);
+    public OptionAdapter(Context context, ArrayList<String> urlList) {
+        super(context, R.layout.option_row ,urlList);
     }
 
     @Override
