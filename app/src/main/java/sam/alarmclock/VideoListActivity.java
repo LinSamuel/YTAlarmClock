@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +26,9 @@ public class VideoListActivity extends AppCompatActivity {
 
     TextView testTextView;
     TextView textViewIntent;
+    EditText userInput;
     DBHandler dbHandler;
+    Boolean urlPlaceHolder = false;
     String selectedURL;
     String currentURL;
     ArrayList<String> urlList;
@@ -39,6 +42,8 @@ public class VideoListActivity extends AppCompatActivity {
 
         testTextView = (TextView) findViewById(R.id.textViewTest);
         textViewIntent = (TextView) findViewById(R.id.textViewIntent);
+        userInput = (EditText) findViewById(R.id.userInput);
+
         dbHandler = new DBHandler(this, null, null, 1);
 
         Intent intent = getIntent();
@@ -76,6 +81,7 @@ public class VideoListActivity extends AppCompatActivity {
 
 
 
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -99,6 +105,7 @@ public class VideoListActivity extends AppCompatActivity {
         if (url != null){
             selectedURL = url;
             currentURL = url;
+            urlPlaceHolder = true;
             textViewIntent.setText(url);
         }
     }
@@ -110,10 +117,15 @@ public class VideoListActivity extends AppCompatActivity {
     }
     public void testButtonClicked(View view){
         //VideoOption videoOption = new VideoOption("zdEhHLjtxDA");
-        VideoOption videoOption = new VideoOption(currentURL);
-        dbHandler.addVideoOption(videoOption);
-        printDatabase();
-        setUpListView();
+        if (urlPlaceHolder){
+            VideoOption videoOption = new VideoOption(currentURL, userInput.getText().toString()); //Costructor is (videoURL, videoName)
+            dbHandler.addVideoOption(videoOption);
+            printDatabase();
+            setUpListView();
+        } else {
+            Toast.makeText(VideoListActivity.this, "Share a valid Youtube URL first before adding video", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public void clearTable(View view){
         dbHandler.clearTable();
@@ -131,8 +143,8 @@ public class VideoListActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String food = String.valueOf(parent.getItemAtPosition(position));
-                        Toast.makeText(VideoListActivity.this, food, Toast.LENGTH_LONG).show();
+                        String choice = String.valueOf(parent.getItemAtPosition(position));
+                        Toast.makeText(VideoListActivity.this, choice, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

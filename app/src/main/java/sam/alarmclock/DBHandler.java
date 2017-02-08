@@ -8,6 +8,8 @@ import android.content.ContentValues;
 
 import java.util.ArrayList;
 
+//Version 1, forgot a comma in onCreate
+
 public class DBHandler extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
@@ -24,7 +26,7 @@ public class DBHandler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_VIDEOOPTIONS + "(" +
-                COLUMN_VIDEOURL + " TEXT " +
+                COLUMN_VIDEOURL + " TEXT, " +
                 COLUMN_VIDEONAME + " TEXT " +
                 ");";
         db.execSQL(query);
@@ -41,6 +43,7 @@ public class DBHandler extends SQLiteOpenHelper{
     public void addVideoOption(VideoOption videoOption){
         ContentValues values = new ContentValues();
         values.put(COLUMN_VIDEOURL, videoOption.getVideoURL());
+        values.put(COLUMN_VIDEONAME, videoOption.getVideoName());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_VIDEOOPTIONS, null, values);
         db.close();
@@ -93,11 +96,11 @@ public class DBHandler extends SQLiteOpenHelper{
         //Position after the last row means the end of the results
         while (!recordSet.isAfterLast()) {
             // null could happen if we used our empty constructor
-//            if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null && recordSet.getString(recordSet.getColumnIndex("videoname")) != null) {
-////                urlList.add("Title: " + recordSet.getString(recordSet.getColumnIndex("videoname")) + "\n"
-////                        + "URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
-//                urlList.add("URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
-//            } else
+            if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null && recordSet.getString(recordSet.getColumnIndex("videoname")) != null) {
+                urlList.add("Title: " + recordSet.getString(recordSet.getColumnIndex("videoname")) + "\n"
+                        + "URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
+                urlList.add("URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
+            } else
             if (recordSet.getString(recordSet.getColumnIndex("videourl")) != null) {
                 urlList.add("URL: " + recordSet.getString(recordSet.getColumnIndex("videourl")));
             }

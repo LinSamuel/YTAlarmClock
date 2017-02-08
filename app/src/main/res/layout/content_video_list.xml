@@ -42,7 +42,6 @@
             <EditText
                 android:id="@+id/userInput"
                 android:layout_width="wrap_content"
-                android:text="Type Title Here"
                 android:padding="7dip"
                 android:paddingRight="20dp"
                 android:layout_height="wrap_content"

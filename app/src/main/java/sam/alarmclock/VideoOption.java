@@ -14,6 +14,12 @@ public class VideoOption {
     }
 
     public VideoOption(String videoURL) {
+        this.videoName = "Default Song Name";
+        this.videoURL = videoURL;
+    }
+
+    public VideoOption(String videoURL, String videoName) {
+        this.videoName = videoName;
         this.videoURL = videoURL;
     }
 
