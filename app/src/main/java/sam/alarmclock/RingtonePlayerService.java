@@ -97,15 +97,9 @@ public class RingtonePlayerService extends Service{
         } else {
             startId = 0;
         }
-        // if no music and user presses alarm on, music should start
+        // if no music and user presses alarm on, alarm should go off
         if (!this.isRunning && startId == 1 ) {
-            Log.e("No music,",  "lets turn it on");
-            //create instance of media player and start it
-/*            media_song = MediaPlayer.create(this, R.raw.champselect);
-            media_song.start();
-
-            this.isRunning = true;
-            this.startId = 0;*/
+            Log.e("No alarm",  "lets turn it on");
 
             watchYoutubeVideo(videoID);
 

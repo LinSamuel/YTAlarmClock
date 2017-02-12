@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 public class VideoListActivity extends AppCompatActivity {
 
-    TextView testTextView;
     TextView textViewIntent;
     EditText userInput;
     DBHandler dbHandler;
@@ -45,7 +44,6 @@ public class VideoListActivity extends AppCompatActivity {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
-        testTextView = (TextView) findViewById(R.id.textViewTest);
         textViewIntent = (TextView) findViewById(R.id.textViewIntent);
         userInput = (EditText) findViewById(R.id.userInput);
 
@@ -122,7 +120,7 @@ public class VideoListActivity extends AppCompatActivity {
     //Print the database
     public void printDatabase() {
         String dbString = dbHandler.databaseToString();
-        testTextView.setText(dbString);
+        return; //currently not going to do anything, testTextView was here before
     }
     public void testButtonClicked(View view){
         //VideoOption videoOption = new VideoOption("zdEhHLjtxDA");
@@ -138,7 +136,6 @@ public class VideoListActivity extends AppCompatActivity {
     }
     public void clearTable(View view){
         dbHandler.clearTable();
-        printDatabase();
     }
 
     public void setUpListView(){
