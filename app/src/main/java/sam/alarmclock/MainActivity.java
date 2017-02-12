@@ -72,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
                     String hour = String.valueOf(theTimePicker.getHour());
                     String minute = String.valueOf(theTimePicker.getMinute());
 
+                    // Add an extra day if the time is earlier than the current day
+
+                    System.out.println("calendar " + calendar.getTimeInMillis());
+                    System.out.println("system " + System.currentTimeMillis());
+                    if(calendar.getTimeInMillis() < System.currentTimeMillis()){
+                        //calendar.setTimeInMillis(calendar.getTimeInMillis());
+                        calendar.add(Calendar.DATE, 1);
+                        System.out.println("adding an extra day... " + calendar.getTimeInMillis());
+                    }
+
                     if (theTimePicker.getHour() > 12){
                         hour = String.valueOf(theTimePicker.getHour() - 12);
                     }
@@ -80,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         minute = "0" + minute;
                     }
 
-
-
-                    set_alarm_text("Alarm on: " + hour + ":"+ minute);
+                    set_alarm_text(" Alarm on: " + hour + ":"+ minute);
 
                     //put extra string in intent, tells clock that you pressed alarm on button
                     alarmIntent.putExtra("extra", "on");
