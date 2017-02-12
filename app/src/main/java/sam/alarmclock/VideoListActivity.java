@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 public class VideoListActivity extends AppCompatActivity {
 
-    TextView testTextView;
     TextView textViewIntent;
     EditText userInput;
     DBHandler dbHandler;
@@ -45,7 +44,6 @@ public class VideoListActivity extends AppCompatActivity {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
-        testTextView = (TextView) findViewById(R.id.textViewTest);
         textViewIntent = (TextView) findViewById(R.id.textViewIntent);
         userInput = (EditText) findViewById(R.id.userInput);
 
@@ -122,14 +120,14 @@ public class VideoListActivity extends AppCompatActivity {
     //Print the database
     public void printDatabase() {
         String dbString = dbHandler.databaseToString();
-        testTextView.setText(dbString);
+        return; //currently not going to do anything, testTextView was here before
     }
     public void testButtonClicked(View view){
         //VideoOption videoOption = new VideoOption("zdEhHLjtxDA");
         if (urlPlaceHolder){
             VideoOption videoOption = new VideoOption(currentURL, userInput.getText().toString()); //Costructor is (videoURL, videoName)
             dbHandler.addVideoOption(videoOption);
-            printDatabase();
+            Toast.makeText(VideoListActivity.this, userInput.getText() + " has been added to the video selection list!", Toast.LENGTH_SHORT).show();
             setUpListView();
         } else {
             Toast.makeText(VideoListActivity.this, "Share a valid Youtube URL first before adding video", Toast.LENGTH_SHORT).show();
@@ -138,7 +136,6 @@ public class VideoListActivity extends AppCompatActivity {
     }
     public void clearTable(View view){
         dbHandler.clearTable();
-        printDatabase();
     }
 
     public void setUpListView(){

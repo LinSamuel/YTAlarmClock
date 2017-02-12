@@ -69,22 +69,10 @@
         android:layout_toRightOf="@id/addButton"
         />
 
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewTest"
-        android:layout_marginTop="120dp"
-        android:layout_below="@+id/addButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="12dp" />
-
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/VideoListView"
-        android:layout_below="@id/textViewTest"></ListView>
+        android:layout_below="@id/addButton"></ListView>
 
 </RelativeLayout>
