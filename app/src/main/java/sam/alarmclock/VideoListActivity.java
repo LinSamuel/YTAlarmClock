@@ -127,7 +127,7 @@ public class VideoListActivity extends AppCompatActivity {
         if (urlPlaceHolder){
             VideoOption videoOption = new VideoOption(currentURL, userInput.getText().toString()); //Costructor is (videoURL, videoName)
             dbHandler.addVideoOption(videoOption);
-            printDatabase();
+            Toast.makeText(VideoListActivity.this, userInput.getText() + " has been added to the video selection list!", Toast.LENGTH_SHORT).show();
             setUpListView();
         } else {
             Toast.makeText(VideoListActivity.this, "Share a valid Youtube URL first before adding video", Toast.LENGTH_SHORT).show();
